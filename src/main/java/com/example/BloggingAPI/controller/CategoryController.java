@@ -22,7 +22,7 @@ public class CategoryController {
         return new ResponseEntity<>(categoryService.addCategory(category), HttpStatus.CREATED);
     }
 
-    @PostMapping("/update/{categoryId}")
+    @PutMapping("/update/{categoryId}")
     public ResponseEntity<Category> updateCategory(@Valid @RequestBody Category category,
                                                    @PathVariable("categoryId")Integer categoryId) {
         return new ResponseEntity<>(categoryService.updateCategory(category,categoryId),HttpStatus.CREATED);
@@ -43,4 +43,6 @@ public class CategoryController {
         categoryService.deleteCategory(categoryId);
         return new ResponseEntity<>("Category deleted successfully",HttpStatus.CREATED);
     }
+
+
 }
