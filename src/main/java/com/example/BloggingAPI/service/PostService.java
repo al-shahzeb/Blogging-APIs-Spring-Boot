@@ -2,7 +2,6 @@ package com.example.BloggingAPI.service;
 
 import com.example.BloggingAPI.dto.PostDto;
 import com.example.BloggingAPI.dto.PostResponse;
-import com.example.BloggingAPI.model.Post;
 
 import java.util.List;
 
@@ -33,9 +32,12 @@ public interface PostService {
 
 
     //get all the posts
-    PostResponse getAllPost(Integer number, Integer size);
+    PostResponse getAllPost(Integer number, Integer size, String sortBy);
 
 
     //get post by post title
     List<PostDto> getPostByTitle(String title);
+
+    //search by title
+    List<PostDto> searchPost(String title);
 }

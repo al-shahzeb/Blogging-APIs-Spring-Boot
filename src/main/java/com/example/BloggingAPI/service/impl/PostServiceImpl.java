@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -103,11 +104,12 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public PostResponse getAllPost(Integer pageNumber, Integer pageSize) {
+    public PostResponse getAllPost(Integer pageNumber, Integer pageSize,String sortBy) {
 
-        Pageable pageable = PageRequest.of(pageNumber,pageSize);
+        Pageable pageable = PageRequest.of(pageNumber,pageSize, Sort.by(sortBy));
         Page<Post> pagePost = postRepository.findAll(pageable);
         List<Post> postList = pagePost.getContent();
+
 
         List<PostDto> postDtos =  postList.stream().map((post)->modelMapper.map(post,PostDto.class)).collect(Collectors.toList());
 
@@ -133,5 +135,13 @@ public class PostServiceImpl implements PostService {
         if(postDtos.size()>0)
             return postDtos;
         throw new ResourceNotFoundException("Post"," post title "+title,0);
+    }
+
+    @Override
+    public List<PostDto> searchPost(String title) {
+        List<Post> postList = postRepository.findBypostTitleContaining(title);
+        List<PostDto> postDtos =  postList.stream().map((post)->modelMapper.map(post,PostDto.class)).collect(Collectors.toList());
+
+        return postDtos;
     }
 }

@@ -26,8 +26,9 @@ public class PostController {
     @GetMapping("/get-all-posts")
     public ResponseEntity<PostResponse> getAllPost(
             @RequestParam(value = "pageNumber", defaultValue = "0", required = false)Integer pageNumber,
-            @RequestParam(value = "pageSize",defaultValue = "5",required = false)Integer pageSize){
-        return new ResponseEntity<>(postService.getAllPost(pageNumber,pageSize),HttpStatus.CREATED);
+            @RequestParam(value = "pageSize",defaultValue = "5",required = false)Integer pageSize,
+            @RequestParam(value = "sortBy", defaultValue = "postId", required = false)String sortBy){
+        return new ResponseEntity<>(postService.getAllPost(pageNumber,pageSize,sortBy),HttpStatus.CREATED);
     }
 
     @GetMapping("/get-by-id/{postId}")
@@ -59,5 +60,10 @@ public class PostController {
     @PutMapping("/update/{postId}")
     public ResponseEntity<PostDto> updatePost(@Valid @RequestBody PostDto postDto, @PathVariable Integer postId){
         return new ResponseEntity<>(postService.updatePost(postDto,postId),HttpStatus.CREATED);
+    }
+
+    @GetMapping("/search/{title}")
+    public ResponseEntity<List<PostDto>> searchPost(@PathVariable String title){
+        return new ResponseEntity<>(postService.searchPost(title),HttpStatus.FOUND);
     }
 }
