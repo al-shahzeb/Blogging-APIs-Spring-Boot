@@ -1,6 +1,7 @@
 package com.example.BloggingAPI.controller;
 
 import com.example.BloggingAPI.dto.PostDto;
+import com.example.BloggingAPI.dto.PostResponse;
 import com.example.BloggingAPI.service.impl.PostServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ public class PostController {
     }
 
     @GetMapping("/get-all-posts")
-    public ResponseEntity<List<PostDto>> getAllPost(
+    public ResponseEntity<PostResponse> getAllPost(
             @RequestParam(value = "pageNumber", defaultValue = "0", required = false)Integer pageNumber,
             @RequestParam(value = "pageSize",defaultValue = "5",required = false)Integer pageSize){
         return new ResponseEntity<>(postService.getAllPost(pageNumber,pageSize),HttpStatus.CREATED);

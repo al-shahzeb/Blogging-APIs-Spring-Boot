@@ -1,6 +1,7 @@
 package com.example.BloggingAPI.service.impl;
 
 import com.example.BloggingAPI.dto.PostDto;
+import com.example.BloggingAPI.dto.PostResponse;
 import com.example.BloggingAPI.exception.ResourceNotFoundException;
 import com.example.BloggingAPI.model.Category;
 import com.example.BloggingAPI.model.Post;
@@ -102,13 +103,22 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<PostDto> getAllPost(Integer pageNumber, Integer pageSize) {
+    public PostResponse getAllPost(Integer pageNumber, Integer pageSize) {
 
         Pageable pageable = PageRequest.of(pageNumber,pageSize);
         Page<Post> pagePost = postRepository.findAll(pageable);
         List<Post> postList = pagePost.getContent();
 
-        return postList.stream().map((post)->modelMapper.map(post,PostDto.class)).collect(Collectors.toList());
+        List<PostDto> postDtos =  postList.stream().map((post)->modelMapper.map(post,PostDto.class)).collect(Collectors.toList());
+
+        PostResponse postResponse = new PostResponse();
+        postResponse.setContent(postDtos);
+        postResponse.setCurrPage(pagePost.getNumber());
+        postResponse.setPageSize(pagePost.getSize());
+        postResponse.setContentSize(pagePost.getTotalElements());
+        postResponse.setTotalPages(pagePost.getTotalPages());
+        //postResponse.setTotalPages((int)(Math.ceil((pagePost.getTotalElements()*1.0) / (pagePost.getSize()*1.0))));
+        return postResponse;
     }
 
     @Override
