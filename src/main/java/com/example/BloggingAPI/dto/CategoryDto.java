@@ -1,20 +1,19 @@
-package com.example.BloggingAPI.model;
+package com.example.BloggingAPI.dto;
 
-import jakarta.persistence.*;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-
-@Entity
-@Table(name="categories")
-@NoArgsConstructor
-@Getter
 @Setter
-public class Category {
-
+@Getter
+@NoArgsConstructor
+public class CategoryDto {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int categoryId;
@@ -26,7 +25,4 @@ public class Category {
     @Column(name="description")
     @NotEmpty
     private String categoryDesc;
-
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
-    private List<Post> postList;
 }

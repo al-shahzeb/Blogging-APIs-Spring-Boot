@@ -1,5 +1,6 @@
 package com.example.BloggingAPI.service;
 
+import com.example.BloggingAPI.dto.CategoryDto;
 import com.example.BloggingAPI.model.Category;
 
 import java.util.List;
@@ -7,16 +8,16 @@ import java.util.List;
 public interface CategoryService {
 
     //create
-    Category addCategory(Category category);
+    CategoryDto addCategory(CategoryDto category);
 
     //update
-    Category updateCategory(Category category, int categoryId);
+    CategoryDto updateCategory(CategoryDto category, int categoryId);
 
     //getById
-    Category getCategoryById(int categoryId);
+    CategoryDto getCategoryById(int categoryId);
 
     //getAll
-    List<Category> getCategories();
+    List<CategoryDto> getCategories();
 
     //delete
     void deleteCategory(int categoryId);

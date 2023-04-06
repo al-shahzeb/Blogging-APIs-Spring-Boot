@@ -1,6 +1,6 @@
 package com.example.BloggingAPI.controller;
 
-import com.example.BloggingAPI.model.Category;
+import com.example.BloggingAPI.dto.CategoryDto;
 import com.example.BloggingAPI.service.impl.CategoryServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,23 +18,23 @@ public class CategoryController {
     CategoryServiceImpl categoryService;
 
     @PostMapping("/add")
-    public ResponseEntity<Category> addCategory(@Valid @RequestBody Category category){
+    public ResponseEntity<CategoryDto> addCategory(@Valid @RequestBody CategoryDto category){
         return new ResponseEntity<>(categoryService.addCategory(category), HttpStatus.CREATED);
     }
 
     @PutMapping("/update/{categoryId}")
-    public ResponseEntity<Category> updateCategory(@Valid @RequestBody Category category,
+    public ResponseEntity<CategoryDto> updateCategory(@Valid @RequestBody CategoryDto category,
                                                    @PathVariable("categoryId")Integer categoryId) {
         return new ResponseEntity<>(categoryService.updateCategory(category,categoryId),HttpStatus.CREATED);
     }
 
     @GetMapping("/get-by-id")
-    public ResponseEntity<Category> getCategoryById(@RequestParam("categoryId")Integer categoryId) {
+    public ResponseEntity<CategoryDto> getCategoryById(@RequestParam("categoryId")Integer categoryId) {
         return new ResponseEntity<>(categoryService.getCategoryById(categoryId),HttpStatus.CREATED);
     }
 
     @GetMapping("/get-all")
-    public ResponseEntity<List<Category>> getCategories() {
+    public ResponseEntity<List<CategoryDto>> getCategories() {
         return new ResponseEntity<>(categoryService.getCategories(),HttpStatus.CREATED);
     }
 

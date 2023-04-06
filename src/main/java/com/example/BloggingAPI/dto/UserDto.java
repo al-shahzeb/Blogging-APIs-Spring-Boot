@@ -1,6 +1,9 @@
-package com.example.BloggingAPI.model;
+package com.example.BloggingAPI.dto;
 
-import jakarta.persistence.*;
+
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
@@ -8,15 +11,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
 
 
-@Entity
-@Table(name="users")
-@NoArgsConstructor
-@Getter
 @Setter
-public class User {
+@Getter
+@NoArgsConstructor
+public class UserDto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -33,14 +33,4 @@ public class User {
     @NotEmpty
     private String about;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Post> postList;
-
-    public User(int userId, String userName, String email, String password, String about) {
-        this.userId = userId;
-        this.userName = userName;
-        this.email = email;
-        this.password = password;
-        this.about = about;
-    }
 }
